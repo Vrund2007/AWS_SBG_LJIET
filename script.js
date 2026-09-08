@@ -95,6 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', handleScrollSpy, { passive: true });
   handleScrollSpy();
 
+  /* ─── SMOOTH SCROLL REVEAL ANIMATIONS ─────────────────── */
+  const revealElements = document.querySelectorAll(
+    '.sec-hdr, .card, .event-card, .about-card-featured, .about-card-sm, .captain-card, .core-card, .domain-card, .gallery-item, .contact-info, .contact-form-wrap, .join-panel, .hero-content, .hero-event-card'
+  );
+
+  revealElements.forEach(el => el.classList.add('reveal'));
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
   /* ─── CONTACT FORM SUBMISSION ──────────────────────────── */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
