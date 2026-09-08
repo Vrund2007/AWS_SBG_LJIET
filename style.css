@@ -1250,8 +1250,8 @@ p {
 
 .footer-col-group {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
 }
 
 .footer-brand-logos {
@@ -1560,8 +1560,8 @@ p {
   }
 
   .footer-col-group {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
   }
 }
 
@@ -1571,8 +1571,8 @@ p {
   }
 
   .footer-col-group {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
   .footer-col h4 {
