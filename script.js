@@ -1,12 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-  /* ─── NAVBAR SCROLL EFFECT ────────────────────────────── */
+  /* ─── NAVBAR SCROLL EFFECT & PROGRESS BAR ───────────────── */
   const navbar = document.getElementById('navbar');
+  const scrollProgress = document.getElementById('scrollProgress');
   
   const updateScrollState = () => {
-    if (window.scrollY > 15) {
+    const scrollY = window.scrollY;
+
+    if (scrollY > 15) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
+    }
+
+    if (scrollProgress) {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = (scrollY / totalHeight) * 100;
+        scrollProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      }
     }
   };
 
@@ -62,6 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Close mobile menu on desktop window resize
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1240 && navLinks && navLinks.classList.contains('open')) {
+      toggleMenu(true);
+    }
+  }, { passive: true });
+
   /* ─── ACTIVE NAV LINK HIGHLIGHTING & SCROLL SPY ─────────── */
   const anchors = document.querySelectorAll('.nav-links a[href^="#"]');
   const sections = document.querySelectorAll('main section[id]');
@@ -97,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ─── SMOOTH SCROLL REVEAL ANIMATIONS ─────────────────── */
   const revealElements = document.querySelectorAll(
-    '.sec-hdr, .card, .event-card, .about-card-featured, .about-card-sm, .captain-card, .core-card, .domain-card, .gallery-item, .contact-info, .contact-form-wrap, .join-panel, .hero-content, .hero-event-card'
+    '.sec-hdr, .card, .gallery-item, .contact-info, .contact-form-wrap, .join-panel, .hero-content, .hero-event-card'
   );
 
   revealElements.forEach(el => el.classList.add('reveal'));
@@ -145,3 +163,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
