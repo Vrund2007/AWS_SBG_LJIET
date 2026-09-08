@@ -530,20 +530,6 @@ p {
   }
 }
 
-.hero-university-badge {
-  display: inline-flex;
-  align-items: center;
-  margin-bottom: 22px;
-  padding: 7px 16px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 99px;
-}
-
-.hero-university-badge img {
-  height: 24px;
-}
-
 .hero h1 {
   margin-bottom: 22px;
 }
