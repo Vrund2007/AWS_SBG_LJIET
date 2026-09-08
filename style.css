@@ -1245,9 +1245,27 @@ p {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 3fr;
   gap: 48px;
   margin-bottom: var(--section-y);
+}
+
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-brand-desc {
+  font-size: 0.9rem;
+  color: #AEB9C9;
+  line-height: 1.6;
+  margin-top: 14px;
+}
+
+.footer-col-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
 }
 
 .footer-brand-logos {
@@ -1482,8 +1500,82 @@ p {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .join-panel {
+    padding: 28px 20px;
+  }
+
+  .join-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .join-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .meta-chip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.84rem;
+  }
+
+  .join-socials {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+  }
+
+  .join-social-link {
+    justify-content: center;
+    padding: 10px 8px;
+    font-size: 0.82rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .join-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .join-btns .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
   .join-visual {
     flex-direction: column;
+  }
+
+  .join-visual .jv-frame {
+    aspect-ratio: auto;
+    max-height: 440px;
+  }
+
+  .join-visual .jv-frame img {
+    height: auto;
+    max-height: 440px;
+    object-fit: contain;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    margin-bottom: 40px;
+  }
+
+  .footer-col-group {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
 }
 
@@ -1492,13 +1584,25 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .footer-col-group {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .footer-col h4 {
+    font-size: 0.78rem;
+    margin-bottom: 12px;
+  }
+
+  .footer-links a {
+    font-size: 0.86rem;
   }
 
   .footer-bottom {
     flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 8px;
   }
 
   .hero-actions {
@@ -1506,14 +1610,6 @@ p {
   }
 
   .hero-actions .btn {
-    width: 100%;
-  }
-
-  .join-btns {
-    flex-direction: column;
-  }
-
-  .join-btns .btn {
     width: 100%;
   }
 
