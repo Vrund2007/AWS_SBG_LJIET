@@ -5,2285 +5,518 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="AWS Student Builder Group at LJ Institute of Engineering & Technology (LJIET) - hands-on student club focused on cloud computing, bootcamps, certifications, and DevOps.">
-  <title>AWS Student Builder Group | LJ Institute of Engineering & Technology</title>
-  <style>
-    :root {
-      --bg: #F7F8FA;
-      --surface: #FFFFFF;
-      --surface-soft: #F2F4F7;
-      --primary: #FF9900;
-      --secondary: #146EB4;
-      --accent: #D13212;
-      --text: #161E2D;
-      --muted: #5F6B7A;
-      --muted-strong: #344054;
-      --line: #D9E0EA;
-      --glass: #FFFFFF;
-      --shadow: 0 18px 42px rgba(16, 24, 40, 0.10);
-      --shadow-soft: 0 10px 28px rgba(16, 24, 40, 0.08);
-      --radius: 8px;
-      --max: 1440px;
-      --nav-height: 74px;
-      --ease: ease;
-      --ease-strong: ease;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background: var(--bg);
-    }
-
-    body {
-      min-height: 100vh;
-      color: var(--text);
-      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      background: linear-gradient(180deg, #FFFFFF 0%, #F7F8FA 42%, #EEF2F6 100%);
-      text-rendering: geometricPrecision;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body.menu-open {
-      overflow: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    .site-shell {
-      position: relative;
-      isolation: isolate;
-    }
-
-    .site-shell::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -2;
-      background-image:
-        /* Technical dotted mesh */
-        radial-gradient(rgba(255, 153, 0, 0.065) 1.5px, transparent 1.5px),
-        radial-gradient(rgba(20, 110, 180, 0.065) 1.5px, transparent 1.5px),
-        /* Linear grid texture */
-        linear-gradient(90deg, rgba(20, 110, 180, 0.045) 1px, transparent 1px),
-        linear-gradient(rgba(20, 110, 180, 0.045) 1px, transparent 1px),
-        /* Fine micro diagonal texture stripes */
-        linear-gradient(135deg, rgba(0, 0, 0, 0.01) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.01) 50%, rgba(0, 0, 0, 0.01) 75%, transparent 75%, transparent);
-      background-size: 24px 24px, 24px 24px, 48px 48px, 48px 48px, 8px 8px;
-      background-position: 0 0, 12px 12px, 0 0, 0 0, 0 0;
-      opacity: 0.95;
-    }
-
-    .site-shell::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: linear-gradient(90deg, rgba(255, 153, 0, 0.09), transparent 28%, rgba(20, 110, 180, 0.07));
-    }
-
-    .container {
-      width: min(100% - 40px, var(--max));
-      margin-inline: auto;
-    }
-
-    .section {
-      padding: 60px 0;
-      position: relative;
-    }
-
-    .section-header {
-      margin-bottom: 32px;
-      max-width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .header-title-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    @media (min-width: 992px) {
-      .section-header:has(.lead) {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-end;
-        gap: 64px;
-      }
-
-      .section-header:has(.lead)>.header-title-group {
-        flex: 1.4;
-      }
-
-      .section-header:has(.lead)>.lead {
-        flex: 1;
-        margin-top: 0;
-        margin-bottom: 6px;
-      }
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-      color: #8AEAFF;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 34px;
-      height: 1px;
-      background: linear-gradient(90deg, var(--secondary), var(--primary));
-    }
-
-    h1,
-    h2,
-    h3 {
-      line-height: 0.98;
-      letter-spacing: 0;
-      font-family: Georgia, "Times New Roman", Times, serif;
-    }
-
-    h1 {
-      max-width: 980px;
-      font-size: clamp(2.45rem, 6vw, 4.8rem);
-      font-weight: 900;
-    }
-
-    h2 {
-      max-width: 100%;
-      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-      font-weight: 880;
-    }
-
-    h3 {
-      font-size: clamp(1.2rem, 2vw, 1.45rem);
-      font-weight: 760;
-    }
-
-    p {
-      color: var(--muted);
-    }
-
-    .lead {
-      max-width: 760px;
-      color: var(--muted-strong);
-      font-size: clamp(1.06rem, 1.7vw, 1.34rem);
-      line-height: 1.72;
-    }
-
-    .text-gradient {
-      background: linear-gradient(110deg, #fff 0%, #e5fbff 34%, #79e8ff 58%, #ffbd5a 86%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 48px;
-      padding: 0 22px;
-      border: 1px solid transparent;
-      border-radius: var(--radius);
-      color: var(--text);
-      font-weight: 780;
-      cursor: pointer;
-      transition: transform 260ms var(--ease-strong), border-color 260ms var(--ease), background 260ms var(--ease), box-shadow 260ms var(--ease), filter 260ms var(--ease);
-      white-space: nowrap;
-    }
-
-    .btn svg {
-      width: 18px;
-      height: 18px;
-      stroke-width: 2.2;
-    }
-
-    .btn-primary {
-      color: #111827;
-      background: linear-gradient(135deg, #ffb13d, var(--primary) 48%, #ffcf81);
-      box-shadow: 0 18px 54px rgba(255, 153, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.52);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.055);
-      border-color: rgba(255, 255, 255, 0.14);
-      backdrop-filter: blur(22px);
-    }
-
-    .btn:hover {
-      transform: translateY(-4px) scale(1.01);
-    }
-
-    .btn-primary:hover {
-      filter: saturate(1.08);
-      box-shadow: 0 24px 70px rgba(255, 153, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.58);
-    }
-
-    .btn-secondary:hover {
-      border-color: rgba(20, 110, 180, 0.48);
-      background: rgba(20, 110, 180, 0.10);
-    }
-
-    .navbar {
-      position: fixed;
-      inset: 14px 0 auto;
-      z-index: 50;
-      height: var(--nav-height);
-      border-bottom: 1px solid transparent;
-      pointer-events: none;
-      transition: inset 240ms var(--ease), background 240ms var(--ease), border-color 240ms var(--ease), box-shadow 240ms var(--ease);
-    }
-
-    .navbar.scrolled {
-      inset: 10px 0 auto;
-    }
-
-    .nav-inner {
-      width: min(100% - 40px, var(--max));
-      height: 100%;
-      margin-inline: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: 8px;
-      background: rgba(8, 15, 28, 0.62);
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(24px);
-      pointer-events: auto;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      min-width: max-content;
-      font-weight: 850;
-      letter-spacing: 0;
-    }
-
-    .brand-logo {
-      width: clamp(118px, 13vw, 178px);
-      height: 44px;
-      object-fit: contain;
-      object-position: left center;
-      filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.25));
-    }
-
-    .brand-mark {
-      position: relative;
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 35% 20%, rgba(255, 255, 255, 0.38), transparent 22%),
-        linear-gradient(150deg, rgba(255, 153, 0, 0.35), rgba(20, 110, 180, 0.14));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 16px 44px rgba(20, 110, 180, 0.14);
-    }
-
-    .brand-mark svg {
-      width: 25px;
-      height: 25px;
-    }
-
-    .nav-actions {
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 12px;
-      min-width: max-content;
-    }
-
-    .aws-logo-link {
-      display: inline-grid;
-      place-items: center;
-      width: 50px;
-      height: 50px;
-      padding: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.065);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
-      transition: transform 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
-    }
-
-    .aws-logo-link:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255, 153, 0, 0.45);
-      background: rgba(255, 153, 0, 0.10);
-    }
-
-    .aws-logo {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 5px;
-    }
-
-    .brand-text {
-      display: grid;
-      line-height: 1.05;
-    }
-
-    .brand-text span:first-child {
-      font-size: 0.93rem;
-    }
-
-    .brand-text span:last-child {
-      color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      justify-content: center;
-      padding: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.030);
-      margin-inline: auto;
-    }
-
-    .nav-links a {
-      padding: 9px 11px;
-      border-radius: 7px;
-      color: #C7D1DF;
-      font-size: 0.86rem;
-      font-weight: 700;
-      transition: color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease);
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.082);
-      transform: translateY(-1px);
-    }
-
-    .menu-toggle {
-      display: none;
-      width: 44px;
-      height: 44px;
-      place-items: center;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.06);
-      cursor: pointer;
-    }
-
-    .menu-toggle svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      align-items: center;
-      padding: calc(var(--nav-height) + 82px) 0 78px;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .hero-bg::before {
-      content: "";
-      position: absolute;
-      width: min(92vw, 1120px);
-      aspect-ratio: 1;
-      left: 50%;
-      top: -9%;
-      translate: -50% 0;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, rgba(20, 110, 180, 0.16), transparent 38%),
-        conic-gradient(from 160deg, rgba(255, 153, 0, 0.20), rgba(20, 110, 180, 0.10), transparent 48%, rgba(255, 153, 0, 0.16));
-      filter: blur(12px);
-    }
-
-    .hero-bg::after {
-      content: "";
-      position: absolute;
-      inset: 17% 2% auto;
-      height: 520px;
-      background: linear-gradient(90deg, transparent, rgba(20, 110, 180, 0.17), rgba(255, 153, 0, 0.19), transparent);
-      filter: blur(82px);
-      transform: skewY(-10deg);
-      opacity: 0.78;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      align-items: center;
-      gap: 36px;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 2;
-      max-width: 1060px;
-      margin-inline: auto;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero-copy h1 {
-      max-width: 980px;
-      font-size: clamp(2.1rem, 4.5vw, 3.35rem);
-      font-weight: 760;
-      line-height: 1.08;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-      padding: 8px 12px 8px 9px;
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 999px;
-      color: #DDE9F7;
-      background: rgba(255, 255, 255, 0.062);
-      backdrop-filter: blur(20px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.13), 0 16px 44px rgba(0, 0, 0, 0.20);
-    }
-
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 24px var(--primary);
-    }
-
-    .hero-copy .lead {
-      margin-top: 20px;
-      max-width: 840px;
-      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-      line-height: 1.65;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 38px;
-    }
-
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 54px;
-      max-width: 1000px;
-      width: 100%;
-    }
-
-    .stat-mini {
-      min-height: 126px;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: var(--radius);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.090), rgba(255, 255, 255, 0.035)),
-        rgba(17, 24, 39, 0.42);
-      backdrop-filter: blur(22px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 18px 48px rgba(0, 0, 0, 0.20);
-      transition: transform 260ms var(--ease-strong), border-color 260ms var(--ease);
-    }
-
-    .stat-mini:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255, 153, 0, 0.24);
-    }
-
-    .stat-mini strong {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--text);
-      font-size: clamp(1.5rem, 2.5vw, 2.1rem);
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .stat-mini span {
-      color: #AEB8C8;
-      font-size: 0.9rem;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .glass-card {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: var(--radius);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.092), rgba(255, 255, 255, 0.034)),
-        rgba(12, 20, 35, 0.62);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 20px 60px rgba(0, 0, 0, 0.16);
-      backdrop-filter: blur(22px);
-      transition: transform 300ms var(--ease-strong), border-color 300ms var(--ease), background 300ms var(--ease), box-shadow 300ms var(--ease);
-    }
-
-    .glass-card::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      opacity: 0;
-      background:
-        radial-gradient(circle at var(--x, 50%) var(--y, 0%), rgba(20, 110, 180, 0.24), transparent 32%),
-        linear-gradient(120deg, rgba(255, 153, 0, 0.12), transparent 42%);
-      transition: opacity 260ms var(--ease);
-      pointer-events: none;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(20, 110, 180, 0.32);
-      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.13);
-    }
-
-    .glass-card:hover::before {
-      opacity: 1;
-    }
-
-    .about-card {
-      min-height: 292px;
-      padding: 32px;
-    }
-
-    .icon-box {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      color: #111827;
-      background: linear-gradient(135deg, var(--primary), #ffcf81);
-      box-shadow: 0 14px 34px rgba(255, 153, 0, 0.18);
-    }
-
-    .icon-box svg {
-      width: 23px;
-      height: 23px;
-    }
-
-    .about-card p,
-    .domain-card p,
-    .event-card p,
-    .member-card p {
-      margin-top: 14px;
-    }
-
-    .domains-layout {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .domain-card {
-      grid-column: span 2;
-      min-height: 334px;
-      padding: 28px;
-    }
-
-    .domain-card:nth-child(1),
-    .domain-card:nth-child(2) {
-      grid-column: span 3;
-    }
-
-    .domain-card .icon-box {
-      color: #06111f;
-      background: linear-gradient(135deg, var(--secondary), #b6f7ff);
-      box-shadow: 0 14px 34px rgba(20, 110, 180, 0.16);
-    }
-
-    .domain-card ul {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 8px;
-      margin-top: 24px;
-      list-style: none;
-      color: #CBD5E1;
-      font-size: 0.92rem;
-    }
-
-    .domain-card li {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .domain-card li::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      flex: 0 0 6px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      box-shadow: 0 0 18px rgba(20, 110, 180, 0.42);
-    }
-
-    .impact-band {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(28px, 5vw, 48px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius);
-      background:
-        radial-gradient(circle at 16% 18%, rgba(255, 153, 0, 0.24), transparent 34%),
-        radial-gradient(circle at 88% 38%, rgba(20, 110, 180, 0.20), transparent 34%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
-        rgba(9, 17, 31, 0.72);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(26px);
-    }
-
-    .impact-band::after {
-      content: "";
-      position: absolute;
-      inset: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 8px;
-      pointer-events: none;
-    }
-
-    .impact-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .impact-item {
-      position: relative;
-      z-index: 1;
-      min-height: 170px;
-      display: grid;
-      align-content: center;
-      padding: 26px;
-      border: 1px solid rgba(255, 255, 255, 0.11);
-      border-radius: 8px;
-      background: rgba(5, 11, 22, 0.48);
-      backdrop-filter: blur(22px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    }
-
-    .impact-number {
-      color: var(--text);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 860;
-      line-height: 1;
-    }
-
-    .impact-label {
-      margin-top: 10px;
-      color: #B7C2D3;
-      font-weight: 720;
-    }
-
-    .events-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .event-card {
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .event-card:nth-child(1) {
-      grid-row: auto;
-      min-height: 100%;
-    }
-
-    .event-image {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
-      background: #EEF2F6;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .event-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .event-content {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      padding: 24px;
-    }
-
-    .event-top {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .event-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 32px;
-      padding: 0 11px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-      color: var(--secondary);
-      background: #EAF4FF;
-      font-size: 0.78rem;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .event-date {
-      color: var(--primary);
-      font-weight: 820;
-      white-space: nowrap;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .event-meta {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: auto;
-      padding-top: 22px;
-    }
-
-    .event-meta span {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .member-card {
-      padding: 22px;
-      text-align: left;
-    }
-
-    .captain-card {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 180px minmax(0, 1fr);
-      align-items: center;
-      gap: 28px;
-      border-left: 4px solid var(--primary);
-    }
-
-    .captain-card .avatar {
-      margin: 0;
-    }
-
-    .core-members {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .avatar {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 1 / 1.05;
-      margin: 0 0 20px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 46% 28%, rgba(255, 255, 255, 0.72), transparent 8%),
-        radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.34), transparent 16%),
-        linear-gradient(150deg, rgba(255, 153, 0, 0.78), rgba(20, 110, 180, 0.38) 58%, rgba(255, 255, 255, 0.08)),
-        #1f2937;
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.26);
-    }
-
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: inherit;
-    }
-
-    .member-role {
-      margin-top: 6px;
-      color: var(--primary);
-      font-size: 0.86rem;
-      font-weight: 800;
-    }
-
-    .socials {
-      display: flex;
-      justify-content: flex-start;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .socials a {
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      color: #E8F1FF;
-      background: rgba(255, 255, 255, 0.055);
-      transition: transform 200ms var(--ease), background 200ms var(--ease), color 200ms var(--ease);
-    }
-
-    .socials a:hover {
-      transform: translateY(-3px);
-      color: #111827;
-      background: var(--primary);
-    }
-
-    .socials svg {
-      width: 17px;
-      height: 17px;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-auto-rows: 118px;
-      gap: 14px;
-    }
-
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.11);
-      border-radius: var(--radius);
-      background: #172033;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
-      isolation: isolate;
-    }
-
-    .gallery-item:nth-child(1) {
-      grid-column: span 5;
-      grid-row: span 3;
-    }
-
-    .gallery-item:nth-child(2) {
-      grid-column: span 4;
-      grid-row: span 2;
-    }
-
-    .gallery-item:nth-child(3) {
-      grid-column: span 3;
-      grid-row: span 2;
-    }
-
-    .gallery-item:nth-child(4) {
-      grid-column: span 4;
-      grid-row: span 3;
-    }
-
-    .gallery-item:nth-child(5) {
-      grid-column: span 3;
-      grid-row: span 3;
-    }
-
-    .gallery-item:nth-child(6) {
-      grid-column: span 5;
-      grid-row: span 2;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(0.92) contrast(1.04);
-      transform: scale(1.02);
-      transition: transform 520ms var(--ease), filter 520ms var(--ease);
-    }
-
-    .gallery-item::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(180deg, transparent 45%, rgba(5, 10, 20, 0.74));
-      opacity: 0.92;
-      pointer-events: none;
-    }
-
-    .gallery-item::after {
-      content: attr(data-caption);
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 14px;
-      z-index: 2;
-      padding: 9px 11px;
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 8px;
-      color: #F8FBFF;
-      background: rgba(11, 18, 32, 0.56);
-      backdrop-filter: blur(16px);
-      font-size: 0.86rem;
-      font-weight: 780;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.09);
-      filter: saturate(1.12) contrast(1.05);
-    }
-
-    .join {
-      padding: 0 0 54px;
-    }
-
-    .join-panel {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(34px, 7vw, 72px);
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: var(--radius);
-      background:
-        radial-gradient(circle at 12% 18%, rgba(20, 110, 180, 0.22), transparent 30%),
-        radial-gradient(circle at 84% 20%, rgba(255, 153, 0, 0.26), transparent 31%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.040)),
-        rgba(10, 17, 30, 0.72);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(28px);
-    }
-
-    .join-panel::before {
-      content: "";
-      position: absolute;
-      inset: auto -16% -46% -16%;
-      height: 220px;
-      background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.24), rgba(20, 110, 180, 0.22), transparent);
-      filter: blur(50px);
-    }
-
-    .join-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 28px;
-    }
-
-    .join-content h2 {
-      max-width: 100%;
-    }
-
-    .join-content p {
-      max-width: 660px;
-      margin-top: 18px;
-      color: #DCE6F5;
-      font-size: 1.08rem;
-    }
-
-    .contact-layout {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 22px;
-    }
-
-    .contact-card {
-      padding: 28px;
-    }
-
-    .contact-list {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 18px;
-      margin-top: 26px;
-      list-style: none;
-    }
-
-    .contact-list li {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .contact-list svg {
-      width: 42px;
-      height: 42px;
-      padding: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      color: var(--secondary);
-      background: rgba(20, 110, 180, 0.10);
-    }
-
-    .contact-list strong {
-      display: block;
-      margin-bottom: 2px;
-      color: #F8FBFF;
-    }
-
-    .contact-form {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 14px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .field {
-      display: grid;
-      gap: 8px;
-    }
-
-    .field label {
-      color: #D8E2F0;
-      font-size: 0.88rem;
-      font-weight: 750;
-    }
-
-    .field input,
-    .field textarea {
-      width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 8px;
-      color: var(--text);
-      background: rgba(11, 18, 32, 0.72);
-      outline: none;
-      transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease), background 180ms var(--ease);
-    }
-
-    .field input {
-      height: 48px;
-      padding: 0 14px;
-    }
-
-    .field textarea {
-      min-height: 142px;
-      padding: 14px;
-      resize: vertical;
-    }
-
-    .field input:focus,
-    .field textarea:focus {
-      border-color: rgba(20, 110, 180, 0.58);
-      background: rgba(11, 18, 32, 0.92);
-      box-shadow: 0 0 0 4px rgba(20, 110, 180, 0.10);
-    }
-
-    .footer {
-      border-top: 1px solid var(--line);
-      background: rgba(4, 8, 15, 0.34);
-    }
-
-    .footer-inner {
-      display: grid;
-      grid-template-columns: 1.15fr repeat(3, 0.6fr);
-      gap: 28px;
-      padding: 44px 0;
-    }
-
-    .footer p {
-      max-width: 390px;
-      margin-top: 16px;
-    }
-
-    .footer h3 {
-      margin-bottom: 14px;
-      font-size: 1rem;
-    }
-
-    .footer-links {
-      display: grid;
-      gap: 9px;
-      list-style: none;
-    }
-
-    .footer-links a {
-      color: var(--muted);
-      transition: color 180ms var(--ease);
-    }
-
-    .footer-links a:hover {
-      color: var(--primary);
-    }
-
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 22px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .eyebrow {
-      color: var(--secondary);
-    }
-
-    .eyebrow::before {
-      background: var(--primary);
-    }
-
-    .text-gradient {
-      background: none;
-      color: var(--secondary);
-    }
-
-    .navbar {
-      inset: 0 0 auto;
-      height: 78px;
-      background: rgba(255, 255, 255, 0.94);
-      border-bottom: 1px solid var(--line);
-      box-shadow: 0 4px 18px rgba(16, 24, 40, 0.05);
-    }
-
-    .navbar.scrolled {
-      inset: 0 0 auto;
-      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.09);
-    }
-
-    .nav-inner {
-      width: min(100% - 40px, var(--max));
-      padding: 8px 0;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      backdrop-filter: none;
-    }
-
-    .brand-logo {
-      filter: none;
-    }
-
-    .aws-logo-link {
-      border-color: var(--line);
-      background: #FFFFFF;
-      box-shadow: none;
-      transition: border-color 160ms var(--ease), background 160ms var(--ease);
-    }
-
-    .aws-logo-link:hover {
-      transform: none;
-      border-color: var(--primary);
-      background: #FFF8ED;
-    }
-
-    .nav-links {
-      border: 0;
-      background: transparent;
-    }
-
-    .nav-links a {
-      color: #344054;
-      font-weight: 650;
-      transition: color 140ms var(--ease), background 140ms var(--ease);
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #111827;
-      background: #FFF3DF;
-      transform: none;
-    }
-
-    .menu-toggle {
-      color: var(--text);
-      background: #FFFFFF;
-      border-color: var(--line);
-    }
-
-    .btn {
-      min-height: 46px;
-      border-radius: 4px;
-      font-weight: 700;
-      transition: background 150ms var(--ease), border-color 150ms var(--ease), color 150ms var(--ease);
-    }
-
-    .btn-primary {
-      color: #111827;
-      background: var(--primary);
-      box-shadow: none;
-    }
-
-    .btn-secondary {
-      color: var(--secondary);
-      background: #FFFFFF;
-      border-color: var(--secondary);
-      backdrop-filter: none;
-    }
-
-    .btn:hover,
-    .btn-primary:hover,
-    .btn-secondary:hover {
-      transform: none;
-      filter: none;
-      box-shadow: none;
-    }
-
-    .btn-primary:hover {
-      background: #E88B00;
-    }
-
-    .btn-secondary:hover {
-      color: #FFFFFF;
-      background: var(--secondary);
-      border-color: var(--secondary);
-    }
-
-    .hero {
-      min-height: auto;
-      padding: calc(var(--nav-height) + 92px) 0 86px;
-      background:
-        linear-gradient(90deg, rgba(255, 153, 0, 0.08), transparent 32%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(247, 248, 250, 0.4) 100%);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .hero-bg {
-      display: none;
-    }
-
-    .hero-badge {
-      color: var(--secondary);
-      background: #EAF4FF;
-      border-color: #C8E0F5;
-      box-shadow: none;
-      backdrop-filter: none;
-    }
-
-    .badge-dot {
-      background: var(--primary);
-      box-shadow: none;
-    }
-
-    .lead {
-      color: var(--muted-strong);
-    }
-
-    .stat-mini,
-    .glass-card,
-    .event-card:nth-child(1),
-    .impact-band,
-    .join-panel {
-      border: 1px solid var(--line);
-      background: var(--surface);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: none;
-    }
-
-    .glass-card::before,
-    .join-panel::before {
-      display: none;
-    }
-
-    .glass-card:hover,
-    .stat-mini:hover {
-      transform: none;
-      border-color: #B8C3D1;
-      background: #FFFFFF;
-      box-shadow: 0 12px 30px rgba(16, 24, 40, 0.10);
-    }
-
-    .icon-box,
-    .domain-card .icon-box {
-      color: #FFFFFF;
-      background: var(--secondary);
-      box-shadow: none;
-    }
-
-    .domain-card li::before {
-      background: var(--primary);
-      box-shadow: none;
-    }
-
-    .impact-band {
-      background:
-        linear-gradient(90deg, rgba(20, 110, 180, 0.08), transparent 42%),
-        #FFFFFF;
-    }
-
-    .impact-stat {
-      background: #F7F8FA;
-      border: 1px solid var(--line);
-      box-shadow: none;
-      backdrop-filter: none;
-    }
-
-    .tag,
-    .contact-list svg {
-      color: var(--secondary);
-      background: #EAF4FF;
-    }
-
-    .member-avatar {
-      color: #FFFFFF;
-      background: linear-gradient(135deg, var(--secondary), var(--primary));
-      box-shadow: none;
-    }
-
-    .socials a {
-      background: #F2F4F7;
-      transition: background 140ms var(--ease), color 140ms var(--ease);
-    }
-
-    .socials a:hover {
-      transform: none;
-      color: #FFFFFF;
-      background: var(--secondary);
-    }
-
-    .gallery-item {
-      background: #FFFFFF;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .gallery-item img {
-      filter: none;
-      transform: none;
-      transition: filter 160ms var(--ease);
-    }
-
-    .gallery-item:hover img {
-      transform: none;
-      filter: contrast(1.03);
-    }
-
-    .gallery-item::before {
-      background: linear-gradient(180deg, transparent 50%, rgba(22, 30, 45, 0.68));
-    }
-
-    .gallery-item::after {
-      background: rgba(255, 255, 255, 0.88);
-      color: var(--text);
-      backdrop-filter: none;
-    }
-
-    .join {
-      padding-top: 24px;
-    }
-
-    .join-panel {
-      background: #FFFFFF;
-    }
-
-    .field label {
-      color: var(--text);
-    }
-
-    .field input,
-    .field textarea {
-      color: var(--text);
-      background: #FFFFFF;
-      border: 1px solid #D9E0EA;
-      box-shadow: none;
-    }
-
-    .field input::placeholder,
-    .field textarea::placeholder {
-      color: var(--muted);
-      opacity: 0.8;
-    }
-
-    .field input:focus,
-    .field textarea:focus {
-      background: #FFFFFF;
-      border-color: var(--secondary);
-      box-shadow: 0 0 0 3px rgba(20, 110, 180, 0.12);
-    }
-
-    .contact-list strong {
-      color: var(--text);
-    }
-
-    .contact-list a {
-      color: var(--secondary);
-      font-weight: 550;
-      transition: color 140ms var(--ease), text-decoration 140ms var(--ease);
-    }
-
-    .contact-list a:hover {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-
-    /* AWS branding details & micro-interactions */
-    .aws-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border: 1px solid #D9E0EA;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      color: #344054;
-      background: #F7F8FA;
-    }
-
-    .aws-status-pill .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #10B981;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-      animation: pulse-dot 1.8s infinite;
-    }
-
-    @keyframes pulse-dot {
-      0% {
-        transform: scale(0.9);
-        opacity: 0.65;
-      }
-
-      50% {
-        transform: scale(1.25);
-        opacity: 1;
-      }
-
-      100% {
-        transform: scale(0.9);
-        opacity: 0.65;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .aws-status-pill {
-        display: none;
-      }
-    }
-
-    .aws-tech-tag {
-      margin-top: 16px;
-      padding: 5px 8px;
-      background: #F7F8FA;
-      border: 1px solid #D9E0EA;
-      border-radius: 6px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.74rem;
-      color: var(--muted);
-      display: inline-block;
-    }
-
-    .aws-tech-tag .tag-label {
-      color: var(--primary);
-      font-weight: 600;
-      margin-right: 4px;
-    }
-
-    .join-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 24px;
-      padding-top: 18px;
-      border-top: 1px dashed var(--line);
-    }
-
-    .meta-item {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.76rem;
-      color: var(--muted);
-    }
-
-    .meta-key {
-      color: var(--secondary);
-      font-weight: 600;
-    }
-
-
-
-    .footer {
-      background: #111827;
-      border-top: 4px solid var(--primary);
-    }
-
-    .footer,
-    .footer h3,
-    .footer .brand-text span:first-child {
-      color: #FFFFFF;
-    }
-
-    .footer p,
-    .footer-links a,
-    .footer-bottom,
-    .footer .brand-text span:last-child {
-      color: #CBD5E1;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(10px);
-      filter: none;
-      transition: opacity 260ms var(--ease), transform 260ms var(--ease);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-
-    @media (max-width: 1120px) {
-      .contact-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .domains-layout {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .domain-card,
-      .domain-card:nth-child(1),
-      .domain-card:nth-child(2),
-      .domain-card:last-child {
-        grid-column: auto;
-      }
-
-      .team-grid,
-      .impact-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .core-members {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 860px) {
-      :root {
-        --nav-height: 68px;
-      }
-
-      .section {
-        padding: 40px 0;
-      }
-
-      .nav-links {
-        position: fixed;
-        top: calc(var(--nav-height) + 18px);
-        left: 16px;
-        right: 16px;
-        display: grid;
-        gap: 6px;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: #FFFFFF;
-        box-shadow: var(--shadow-soft);
-        backdrop-filter: none;
-        transform: translateY(-8px);
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: transform 160ms var(--ease), opacity 160ms var(--ease), visibility 160ms var(--ease);
-      }
-
-      .nav-links.open {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-      }
-
-      .nav-links a {
-        padding: 13px 12px;
-      }
-
-      .menu-toggle {
-        display: grid;
-      }
-
-      .hero {
-        padding-top: calc(var(--nav-height) + 56px);
-      }
-
-      .hero-copy h1 {
-        font-size: clamp(1.85rem, 8vw, 2.65rem);
-      }
-
-      h2 {
-        font-size: clamp(1.5rem, 6.5vw, 2.15rem);
-      }
-
-      .stats-row,
-      .grid-3,
-      .events-grid,
-      .footer-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .event-card:nth-child(1) {
-        grid-row: auto;
-        min-height: 100%;
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(6, 1fr);
-        grid-auto-rows: 92px;
-      }
-
-      .gallery-item:nth-child(n) {
-        grid-column: span 3;
-        grid-row: span 2;
-      }
-
-      .gallery-item:nth-child(1),
-      .gallery-item:nth-child(6) {
-        grid-column: span 6;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 640px) {
-
-      .container,
-      .nav-inner {
-        width: min(100% - 28px, var(--max));
-      }
-
-      .brand-logo {
-        width: 104px;
-        height: 40px;
-      }
-
-      .nav-actions {
-        gap: 8px;
-      }
-
-      .aws-logo-link {
-        width: 46px;
-        height: 46px;
-      }
-
-      .hero-actions .btn {
-        width: 100%;
-      }
-
-      .stats-row,
-      .domains-layout,
-      .impact-grid,
-      .team-grid,
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .core-members {
-        grid-template-columns: 1fr;
-      }
-
-      .captain-card {
-        grid-template-columns: 1fr;
-      }
-
-      .captain-card .avatar {
-        margin-bottom: 20px;
-      }
-
-      .domain-card,
-      .domain-card:nth-child(1),
-      .domain-card:nth-child(2),
-      .domain-card:last-child {
-        grid-column: auto;
-      }
-
-      .impact-band {
-        padding: 18px;
-      }
-
-      .event-top {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-auto-rows: 220px;
-      }
-
-      .gallery-item:nth-child(n) {
-        grid-column: auto;
-        grid-row: auto;
-      }
-
-      .join {
-        padding-bottom: 40px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 1ms !important;
-        scroll-behavior: auto !important;
-        transition-duration: 1ms !important;
-      }
-    }
-  </style>
+    content="AWS Student Builder Group at LJ Institute of Engineering & Technology (LJIET) — hands-on student club focused on cloud computing, bootcamps, certifications, and DevOps.">
+  <title>AWS Student Builder Group | LJIET</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="site-shell">
-    <header class="navbar" id="navbar">
-      <nav class="nav-inner" aria-label="Primary navigation">
-        <a class="brand" href="#home" aria-label="LJ University home">
-          <img class="brand-logo" src="images/lj.png" alt="LJ University logo">
-        </a>
 
-        <div class="nav-links" id="navLinks">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#domains">Domains</a>
-          <a href="#events">Events</a>
-          <a href="#team">Leadership Team</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#contact">Contact</a>
+  <!-- ═══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="navbar" id="navbar">
+    <nav class="nav-inner container" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="AWS SBG LJIET home">
+        <div class="brand-lj">
+          <img src="images/LJIET_LOGO.png" alt="LJIET shield logo">
         </div>
-
-        <div class="nav-actions">
-          <div class="aws-status-pill">
-            <span class="status-dot"></span>
-            <span class="status-text">LJ INSTITUTE OF ENGINEERING AND TECHNOLOGY</span>
-          </div>
-          <a class="aws-logo-link" href="#home" aria-label="AWS Student Builder Group home">
-            <img class="aws-logo" src="images/AWS_LJ_LOGO.jpg.jpeg" alt="AWS Student Builder Group logo">
-          </a>
-          <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu"
-            aria-expanded="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          </button>
+        <div class="brand-divider"></div>
+        <div class="brand-aws-block">
+          <img src="images/AWS_LJIET_LOGO.jpeg" alt="AWS SBG logo">
         </div>
-      </nav>
-    </header>
+        <div class="brand-text-group">
+          <span class="b-name">AWS Student Builder Group</span>
+          <span class="b-sub">LJIET Chapter</span>
+        </div>
+      </a>
 
-    <main>
-      <section class="hero section" id="home">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <div class="hero-badge"><span class="badge-dot"></span> Active Cloud Learning Hub at LJIET</div>
-            <h1>AWS Student Builder Group at <span class="text-gradient">LJ Institute of Engineering & Technology</span>
-            </h1>
-            <p class="lead">We are LJIET's official sandbox for cloud computing. We run hands-on lab sessions, weekend
-              build sprints, collaborative AWS certification tracks, and serverless hackathons to turn raw student
-              curiosity into shipped, production-ready cloud systems.</p>
+      <div class="nav-links" id="navLinks" role="menubar">
+        <a href="#home" role="menuitem">Home</a>
+        <a href="#about" role="menuitem">About</a>
+        <a href="#events" role="menuitem">Events</a>
+        <a href="#team" role="menuitem">Team</a>
+        <a href="#gallery" role="menuitem">Gallery</a>
+        <a href="#contact" role="menuitem">Contact</a>
+      </div>
+
+      <div class="nav-cta">
+        <div class="status-pill" aria-label="Club status: active">
+          <span class="status-dot"></span>
+          LJIET &middot; Active
+        </div>
+        <a class="btn btn-primary" href="#join">Join Now</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="6" x2="20" y2="6" class="hamburger-line line-top"></line>
+            <line x1="4" y1="12" x2="20" y2="12" class="hamburger-line line-mid"></line>
+            <line x1="4" y1="18" x2="20" y2="18" class="hamburger-line line-bot"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ── HERO ──────────────────────────────────────────────── -->
+    <section class="hero" id="home" aria-label="Hero">
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-content">
+            <div class="hero-university-badge">
+              <img src="images/lj.png" alt="Lok Jagruti Kendra University">
+            </div>
+            <h1>Build on the cloud. Learn by doing.</h1>
+            <p class="lead">LJIET's official cloud computing club — running hands-on lab sessions, AWS certification
+              tracks, DevOps bootcamps, and serverless hackathons to turn student curiosity into production-ready cloud
+              systems.</p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#join">
-                Join Community
+                Join the Community
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
                   stroke-linejoin="round">
                   <path d="M5 12h14M13 5l7 7-7 7" />
                 </svg>
               </a>
-              <a class="btn btn-secondary" href="#events">
-                Explore Events
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path
-                    d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-                </svg>
-              </a>
+              <a class="btn btn-outline" href="#events">Explore Events</a>
             </div>
+          </div>
 
-            <div class="stats-row" aria-label="Club highlights">
-              <div class="stat-mini">
-                <strong>95%+</strong>
-                <span>members shipping hands-on projects</span>
+          <div class="hero-event-card">
+            <div class="hec-img-wrapper">
+              <img src="images/innogration.jpeg" alt="AWS SBG Inauguration event">
+            </div>
+            <div class="hec-body">
+              <div class="hec-top">
+                <span class="tag">Inaugural Launch</span>
+                <span class="hec-date">14 Sep 2026</span>
               </div>
-              <div class="stat-mini">
-                <strong>12+</strong>
-                <span>team-based cloud build sprints</span>
+              <h3>AWS SBG Inauguration &amp; Cloud Fundamentals</h3>
+              <p>The official launch of the club with a live session on AWS Cloud Fundamentals. Set up your lab, deploy
+                your first resource, and meet your team.</p>
+              <div class="hec-meta">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg> 2:00 PM – 4:00 PM</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg> Auditorium</span>
               </div>
-              <div class="stat-mini">
-                <strong>8wk</strong>
-                <span>guided certification cohorts</span>
+              <div class="hec-speaker">
+                <div class="hec-speaker-avatar">DM</div>
+                <div class="hec-speaker-info">
+                  <strong>Darko Mesaros</strong>
+                  <span>AWS Developer Advocate</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" id="about">
-        <div class="container">
-          <div class="section-header reveal">
-            <div class="header-title-group">
-              <span class="eyebrow">ACTIVITIES & PURPOSE</span>
-              <h2>Not a lecture hall. A hands-on cloud workspace.</h2>
+    <!-- ── ABOUT ──────────────────────────────────────────────── -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="kicker">What we do</span>
+          <h2>Not a lecture hall. A hands-on cloud workspace.</h2>
+        </div>
+        <div class="about-grid">
+          <article class="card about-card-featured">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M3 12h4l3 8 4-16 3 8h4" />
+              </svg>
             </div>
-          </div>
+            <h3>Build sprints</h3>
+            <p>Design and ship live serverless applications, containerised microservices, and secure databases during
+              fast-paced coding sessions with real AWS accounts. Every sprint ends with something deployed — not just
+              slides reviewed.</p>
+            <p>We run sprints every month, ranging from 2-hour workshops to full-day build events where squads compete
+              to ship the best architecture.</p>
+          </article>
 
-          <div class="grid-3">
-            <article class="glass-card about-card reveal">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+          <div class="about-stacked">
+            <article class="card about-card-sm">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round">
-                  <path d="M3 12h4l3 8 4-16 3 8h4" />
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <path d="M8 21h8M12 17v4" />
                 </svg>
               </div>
-              <h3>Build Sprints</h3>
-              <p>We design and launch live serverless applications, containerized microservices, and secure databases
-                during fast-paced coding sessions.</p>
-            </article>
-            <article class="glass-card about-card reveal">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
+              <div>
+                <h3>Certification tracks</h3>
+                <p>Structured study groups, practice test walkthroughs, and peer review sessions targeting AWS Certified
+                  Cloud Practitioner and Associate level exams.</p>
               </div>
-              <h3>Certification Tracks</h3>
-              <p>Host structured study groups, practice test walkthroughs, and peer review sessions for the AWS
-                Certified Cloud Practitioner exam.</p>
             </article>
-            <article class="glass-card about-card reveal">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+            <article class="card about-card-sm">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
               </div>
-              <h3>Hands-on Labs</h3>
-              <p>Access guided sandboxes, code critiques, and collaborative project cohorts where you learn by coding,
-                not just reading.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="domains">
-        <div class="container">
-          <div class="section-header reveal">
-            <div class="header-title-group">
-              <span class="eyebrow">LEARNING TRACKS</span>
-              <h2>Five tracks. One launch mindset.</h2>
-            </div>
-          </div>
-
-          <div class="domains-layout">
-            <article class="glass-card domain-card reveal">
-              <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M18 10h1a4 4 0 0 1 0 8H7a5 5 0 1 1 1.7-9.7A6 6 0 0 1 18 10Z" />
-                </svg></div>
-              <h3>Cloud Core & Infra</h3>
-              <p>Design high-availability cloud setups, understand storage classes, and configure secure network
-                topologies.</p>
-              <ul>
-                <li>Compute & VPCs</li>
-                <li>Storage & Databases</li>
-                <li>Security Foundations</li>
-              </ul>
-              <div class="aws-tech-tag"><span class="tag-label">services:</span> EC2, S3, RDS, VPC</div>
-            </article>
-            <article class="glass-card domain-card reveal">
-              <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M16 18 22 12 16 6M8 6 2 12l6 6" />
-                </svg></div>
-              <h3>DevOps & Pipelines</h3>
-              <p>Automate deployments and build reliable continuous delivery pipelines that run code on demand.</p>
-              <ul>
-                <li>CI/CD Automation</li>
-                <li>Containerized Services</li>
-                <li>Infrastructure as Code</li>
-              </ul>
-              <div class="aws-tech-tag"><span class="tag-label">tools:</span> CodePipeline, ECS, CDK</div>
-            </article>
-            <article class="glass-card domain-card reveal">
-              <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M12 2a10 10 0 1 0 10 10" />
-                  <path d="M12 8v8M8 12h8M20 2v6h-6" />
-                </svg></div>
-              <h3>Applied AI/ML</h3>
-              <p>Deploy machine learning models, integrate translation/vision APIs, and manage data pipeline workflows.
-              </p>
-              <ul>
-                <li>Model Deployments</li>
-                <li>Data Engineering</li>
-                <li>AI Services</li>
-              </ul>
-              <div class="aws-tech-tag"><span class="tag-label">models:</span> SageMaker, Bedrock, Rekognition</div>
-            </article>
-            <article class="glass-card domain-card reveal">
-              <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="m12 2 8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6l8-4Z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg></div>
-              <h3>Cloud Security</h3>
-              <p>Protect workloads, audit user privileges, monitor logs, and secure data using industry standards.</p>
-              <ul>
-                <li>Identity & Access</li>
-                <li>Threat Monitoring</li>
-                <li>Audit & Compliance</li>
-              </ul>
-              <div class="aws-tech-tag"><span class="tag-label">security:</span> IAM, KMS, WAF, GuardDuty</div>
-            </article>
-            <article class="glass-card domain-card reveal">
-              <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <rect width="18" height="14" x="3" y="4" rx="2" />
-                  <path d="M8 20h8M12 16v4" />
-                </svg></div>
-              <h3>Full Stack Cloud</h3>
-              <p>Connect user interfaces to robust cloud backends, deploy static web assets, and scale serverless APIs.
-              </p>
-              <ul>
-                <li>REST/GraphQL APIs</li>
-                <li>Serverless Compute</li>
-                <li>Web Hosting</li>
-              </ul>
-              <div class="aws-tech-tag"><span class="tag-label">stack:</span> Lambda, API Gateway, Amplify</div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="impact">
-        <div class="container">
-          <div class="impact-band reveal">
-            <div class="section-header">
-              <div class="header-title-group">
-                <span class="eyebrow">OUR NUMBERS</span>
-                <h2>Action over words.</h2>
-              </div>
-            </div>
-            <div class="impact-grid">
-              <div class="impact-item"><span class="impact-number counter" data-target="520">0</span><span
-                  class="impact-label">Active Builders</span></div>
-              <div class="impact-item"><span class="impact-number counter" data-target="38">0</span><span
-                  class="impact-label">Cloud Bootcamps</span></div>
-              <div class="impact-item"><span class="impact-number counter" data-target="26">0</span><span
-                  class="impact-label">Project Showcases</span></div>
-              <div class="impact-item"><span class="impact-number counter" data-target="140">0</span><span
-                  class="impact-label">AWS Practice Labs</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="events">
-        <div class="container">
-          <div class="section-header reveal">
-            <div class="header-title-group">
-              <span class="eyebrow">Events</span>
-              <h2>Featured club events, past AWS Ahmedabad community events, and major LJ University activities.</h2>
-            </div>
-          </div>
-
-          <div class="events-grid">
-            <article class="glass-card event-card reveal">
-              <div class="event-image">
-                <img src="C:\Users\naiti\Desktop\Random Design\AWS_SBG_LJIET\images\innogration.jpeg" alt="AWS Student Builder Group inauguration event">
-              </div>
-              <div class="event-content">
-                <div class="event-top">
-                  <span class="event-tag">Hands-on Launch</span>
-                  <span class="event-date">TBA</span>
-                </div>
-                <h3>AWS Student Builder Group Inauguration</h3>
-                <p>Meet the team, get your lab environment credentials, explore our upcoming learning paths, and deploy
-                  your very first cloud asset in under 30 minutes.</p>
-                <div class="event-meta"><span>Time: TBA</span><span>Venue: LJIET Main Auditorium</span></div>
-              </div>
-            </article>
-            <article class="glass-card event-card reveal">
-              <div class="event-image">
-                <img src="C:\Users\naiti\Desktop\Random Design\AWS_SBG_LJIET\images\event2.jpeg" alt="AWS cloud fundamentals workshop">
-              </div>
-              <div class="event-content">
-                <div class="event-top">
-                  <span class="event-tag">Workshop Series</span>
-                  <span class="event-date">Coming Soon</span>
-                </div>
-                <h3>AWS Ahmedabad Community Events</h3>
-                <p>A structured, lab-driven introduction to cloud essentials: compute configurations, simple storage
-                  buckets, and user access controls. Perfect for beginners.</p>
-                <div class="event-meta"><span>Lab-driven</span><span>No prior experience needed</span></div>
-              </div>
-            </article>
-            <article class="glass-card event-card reveal">
-              <div class="event-image">
-                <img src="C:\Users\naiti\Desktop\Random Design\AWS_SBG_LJIET\images\event3.jpeg" alt="Serverless project sprint event">
-              </div>
-              <div class="event-content">
-                <div class="event-top">
-                  <span class="event-tag">Hack Session</span>
-                  <span class="event-date">Coming Soon</span>
-                </div>
-                <h3>LJ University Technical Events</h3>
-                <p>Form squads of three, design a serverless feedback application using AWS Lambda, and deploy it to a
-                  live public URL during the workshop.</p>
-                <div class="event-meta"><span>Team challenge</span><span>Winner showcase</span></div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="team">
-        <div class="container">
-          <div class="section-header reveal">
-            <div class="header-title-group">
-              <span class="eyebrow">Team</span>
-              <h2>Leadership Team</h2>
-            </div>
-          </div>
-
-          <div class="team-grid">
-            <article class="glass-card member-card captain-card reveal">
-              <div class="avatar"><div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:3rem;font-weight:bold;">FC</div></div>
-              <div><h3>Dr. Faculty Coordinator</h3><div class="member-role">Faculty Coordinator</div><p>Guides the chapter, mentors student leaders, and supports club initiatives and industry collaboration.</p></div>
-            </article>
-            <article class="glass-card member-card captain-card reveal">
-              <div class="avatar"><div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:3rem;font-weight:bold;">AD</div></div>
-              <div><h3>Anjali Dubey</h3><div class="member-role">President / Chapter Lead</div><p>Coordinates club strategy, events, technical initiatives, and student engagement.</p></div>
-            </article>
-            <div class="core-members">
-              <article class="glass-card member-card reveal">
-                <div class="avatar"><div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:2.5rem;font-weight:bold;">JS</div></div>
-                <h3>John Snow</h3>
-                <div class="member-role">Cloud Technical Director</div>
-                <p>Designs the hands-on lab guides, leads build code reviews, and manages our shared developer sandbox.
-                </p>
-              </article>
-              <article class="glass-card member-card reveal">
-                <div class="avatar"><div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:2.5rem;font-weight:bold;">JS</div></div>
-                <h3>John Snow</h3>
-                <div class="member-role">Bootcamps & Event Operations</div>
-                <p>Schedules workshops, coordinates venue bookings, and ensures every attendee has internet and lab
-                  credentials.</p>
-              </article>
-              <article class="glass-card member-card reveal">
-                <div class="avatar"><div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:2.5rem;font-weight:bold;">JS</div></div>
-                <h3>John Snow</h3>
-                <div class="member-role">Student Engagement & Support</div>
-                <p>Manages student onboarding, tracks cohort progress, and connects builders into cooperative project
-                  squads.</p>
-              </article>
-              <article class="glass-card member-card reveal">
-                <div class="avatar"><div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:2.5rem;font-weight:bold;">JS</div></div>
-                <h3>John Snow</h3>
-                <div class="member-role">Visual Design & Copy</div>
-                <p>Creates all posters, code walkthrough graphics, event invites, and keeps our digital assets polished.
-                </p>
-              </article>
-              <article class="glass-card member-card reveal">
-                <div class="avatar"><div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:2.5rem;font-weight:bold;">JS</div></div>
-                <h3>John Snow</h3>
-                <div class="member-role">Logistics & Partnerships</div>
-                <p>Manages resource requests, event catering, certifications vouchers coordination, and college
-                  permissions.</p>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="gallery">
-        <div class="container">
-          <div class="section-header reveal">
-            <div class="header-title-group">
-              <span class="eyebrow">Gallery</span>
-              <h2>Snapshots from our labs, coding sessions, and demo days.</h2>
-            </div>
-          </div>
-
-          <div class="gallery-grid reveal">
-            <figure class="gallery-item" data-caption="Cloud architecture lab"><img
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
-                alt="Students working on laptops in a technology workshop"></figure>
-            <figure class="gallery-item" data-caption="Hackathon build sprint"><img
-                src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=760&q=80"
-                alt="Team collaborating during a hackathon"></figure>
-            <figure class="gallery-item" data-caption="Industry expert Q&A"><img
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=640&q=80"
-                alt="Speaker presenting to a group"></figure>
-            <figure class="gallery-item" data-caption="Live code reviews"><img
-                src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=760&q=80"
-                alt="Team reviewing code and deployment work"></figure>
-            <figure class="gallery-item" data-caption="AWS Certification study circle"><img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=640&q=80"
-                alt="Students studying together"></figure>
-            <figure class="gallery-item" data-caption="Project demo day"><img
-                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=900&q=80"
-                alt="Students presenting a technical project"></figure>
-          </div>
-        </div>
-      </section>
-
-      <section class="join" id="join">
-        <div class="container">
-          <div class="join-panel reveal">
-            <div class="join-content">
               <div>
-                <span class="eyebrow">Join community</span>
-                <h2>Enter the next cohort with a project, a squad, and a standard.</h2>
-                <p>Register to access shared cloud sandboxes, receive peer feedback, join study cohorts, and build work
-                  you can talk about in interviews.</p>
-                <div class="join-meta">
-                  <span class="meta-item"><span class="meta-key">AWS Academy:</span> Authorized Partner</span>
-                  <span class="meta-item"><span class="meta-key">Next Cohort:</span> Aug 2026</span>
-                  <span class="meta-item"><span class="meta-key">Exam Focus:</span> AWS Certified Cloud
-                    Practitioner</span>
-                </div>
+                <h3>Collaborative labs</h3>
+                <p>Access guided sandboxes, live code critiques, and project cohorts where you learn by building, not
+                  just reading slides.</p>
               </div>
-              <a class="btn btn-primary" href="#contact">
-                Become a Member
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </a>
-            </div>
+            </article>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" id="contact">
-        <div class="container">
-          <div class="section-header reveal">
-            <div class="header-title-group">
-              <span class="eyebrow">Contact</span>
-              <h2>Have questions about certifications or events? Drop us a line.</h2>
+    <!-- ── DOMAINS ────────────────────────────────────────────── -->
+
+
+    <!-- ── EVENTS ──────────────────────────────────────────────── -->
+    <section class="section" id="events">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="kicker">Events</span>
+          <h2>Club events, community sessions &amp; LJ University activities.</h2>
+        </div>
+        <div class="events-grid">
+          <article class="card event-card">
+            <div class="event-img">
+              <img src="images/innogration.jpeg" alt="AWS Student Builder Group inauguration event">
             </div>
-          </div>
-
-          <div class="contact-layout">
-            <aside class="glass-card contact-card reveal">
-              <h3>Visit our Cloud Lab</h3>
-              <p>We welcome students from every branch and year. No prior AWS experience required, just curiosity and
-                consistency.</p>
-              <ul class="contact-list">
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+            <div class="event-body">
+              <div class="event-meta-row">
+                <span class="tag">Inaugural Launch</span>
+                <span class="hec-date">14 Sep 2026</span>
+              </div>
+              <h3>AWS SBG Inauguration &amp; Cloud Fundamentals Session</h3>
+              <p>The official launch of AWS Student Builder Group at LJIET. <strong>Darko Mesaros</strong> — AWS
+                Developer Advocate — will deliver a hands-on session on AWS Cloud Fundamentals.</p>
+              <div class="event-footer">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
-                    <path d="M4 4h16v16H4z" />
-                    <path d="m22 6-10 7L2 6" />
-                  </svg><span><strong>Email</strong><a
-                      href="mailto:awsclub@ljiet.edu.in">awsclub@ljiet.edu.in</a></span></li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>2:00 PM – 4:00 PM</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z" />
                     <circle cx="12" cy="10" r="3" />
-                  </svg><span><strong>Campus</strong>LJ University Campus, Block B, Lab 302</span></li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path
-                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.58 2.6a2 2 0 0 1-.45 2.11L8 9.67a16 16 0 0 0 6.33 6.33l1.24-1.24a2 2 0 0 1 2.11-.45c.83.26 1.7.46 2.6.58A2 2 0 0 1 22 16.92Z" />
-                  </svg><span><strong>Office Hours</strong>Wednesdays, 4:00 PM - 5:30 PM</span></li>
-              </ul>
-            </aside>
+                  </svg>LJ Eng. Auditorium</span>
+              </div>
+            </div>
+          </article>
 
-            <form class="glass-card contact-card contact-form reveal">
+          <article class="card event-card">
+            <div class="event-img">
+              <img src="images/event2.jpeg" alt="AWS cloud fundamentals workshop">
+            </div>
+            <div class="event-body">
+              <div class="event-meta-row">
+                <span class="tag">Workshop Series</span>
+                <span class="hec-date">Coming Soon</span>
+              </div>
+              <h3>AWS Ahmedabad Community Events</h3>
+              <p>Lab-driven sessions covering cloud essentials: compute, storage buckets, and access controls. Built for
+                complete beginners.</p>
+              <div class="event-footer">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                  </svg>Lab-driven</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                  </svg>No prior experience</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card event-card">
+            <div class="event-img">
+              <img src="images/event3.jpeg" alt="Serverless project sprint">
+            </div>
+            <div class="event-body">
+              <div class="event-meta-row">
+                <span class="tag">Hack Session</span>
+                <span class="hec-date">Coming Soon</span>
+              </div>
+              <h3>LJ University Technical Events</h3>
+              <p>Form squads of three, build a serverless feedback app using AWS Lambda, and deploy it to a live URL
+                during the sprint.</p>
+              <div class="event-footer">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>Team challenge</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>Winner showcase</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TEAM ───────────────────────────────────────────────── -->
+    <section class="section section-alt" id="team">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="kicker">Team</span>
+          <h2>Leadership team</h2>
+        </div>
+
+        <div class="captain-row">
+          <article class="card captain-card">
+            <div class="avatar">TT</div>
+            <div>
+              <h3>Tushar Thakkar</h3>
+              <div class="member-role">Faculty Coordinator</div>
+              <p>Guides the chapter, mentors student leaders, and supports club initiatives and industry collaboration.
+              </p>
+            </div>
+          </article>
+          <article class="card captain-card">
+            <div class="avatar"><img src="images/Anjali.jpg" alt="Anjali Dubey"></div>
+            <div>
+              <h3>Anjali Dubey</h3>
+              <div class="member-role">President / Chapter Lead</div>
+              <p>Coordinates club strategy, events, technical initiatives, and student engagement across LJIET.</p>
+              <div class="socials">
+                <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg></a>
+                <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                    <path d="M9 18c-4.51 2-5-2-7-2" />
+                  </svg></a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="core-grid">
+          <article class="card core-card">
+            <div class="avatar"><img src="images/Romin.jpg" alt="Romin Kevadiya"></div>
+            <h3>Romin Kevadiya</h3>
+            <div class="member-role">Technical Team</div>
+          </article>
+          <article class="card core-card">
+            <div class="avatar"><img src="images/indrakshi.jpg" alt="Indrakshi Singh C."></div>
+            <h3>Indrakshi Singh C.</h3>
+            <div class="member-role">Content Team</div>
+          </article>
+          <article class="card core-card">
+            <div class="avatar"><img src="images/Rajvee.jpg" alt="Rajvee Kapadia"></div>
+            <h3>Rajvee Kapadia</h3>
+            <div class="member-role">Marketing Team</div>
+          </article>
+          <article class="card core-card">
+            <div class="avatar"><img src="images/Labdhi.jpg" alt="Labdhi Shah"></div>
+            <h3>Labdhi Shah</h3>
+            <div class="member-role">Social Media Team</div>
+          </article>
+          <article class="card core-card">
+            <div class="avatar avatar-devam"><img src="images/devam.PNG" alt="Devam Doshi"></div>
+            <h3>Devam Doshi</h3>
+            <div class="member-role">Event Management Team</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── GALLERY ────────────────────────────────────────────── -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="kicker">Gallery</span>
+          <h2>Snapshots from labs, coding sessions &amp; demo days.</h2>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item">
+            <div class="g-img"><img src="images/innogration.jpeg" alt="AWS SBG Inauguration event"></div>
+            <figcaption class="gallery-caption">Club Inauguration</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="g-img"><img src="images/event2.jpeg" alt="AWS community workshop"></div>
+            <figcaption class="gallery-caption">Community Workshop</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="g-img"><img src="images/event3.jpeg" alt="LJ University Technical Event"></div>
+            <figcaption class="gallery-caption">Technical Event</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="g-img"><img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=760&q=80"
+                alt="Team reviewing code"></div>
+            <figcaption class="gallery-caption">Live Code Reviews</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="g-img"><img
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=640&q=80"
+                alt="Students studying together"></div>
+            <figcaption class="gallery-caption">AWS Cert Study Circle</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="g-img"><img
+                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=900&q=80"
+                alt="Project demo day"></div>
+            <figcaption class="gallery-caption">Project Demo Day</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── JOIN ───────────────────────────────────────────────── -->
+    <section class="section section-alt" id="join">
+      <div class="container">
+        <div class="join-panel">
+          <div class="join-content">
+            <div>
+              <span class="kicker">Join the community</span>
+              <h2>Enter the next cohort with a project, a squad, and a standard.</h2>
+              <p>Register to access shared cloud sandboxes, receive peer feedback, join study cohorts, and build work
+                you can talk about in interviews.</p>
+
+              <div class="join-meta">
+                <span class="meta-chip"><strong>AWS Academy:</strong> Authorized Partner</span>
+                <span class="meta-chip"><strong>Next Cohort:</strong> Aug 2026</span>
+                <span class="meta-chip"><strong>Focus:</strong> Cloud Practitioner</span>
+              </div>
+
+              <div class="join-socials">
+                <a class="join-social-link"
+                  href="https://www.meetup.com/aws-sbg-at-lj-institute-of-engineering-and-technology" target="_blank"
+                  rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                  Meetup
+                </a>
+                <a class="join-social-link"
+                  href="https://www.linkedin.com/company/aws-student-builder-group-at-ljiet/posts/" target="_blank"
+                  rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                  LinkedIn Page
+                </a>
+                <a class="join-social-link" href="https://www.linkedin.com/groups/26960015" target="_blank"
+                  rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                  LinkedIn Group
+                </a>
+                <a class="join-social-link" href="https://www.instagram.com/aws.sbg_lj?stkn=MWoxcG5weTBmdTI5OA=="
+                  target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                  Instagram
+                </a>
+              </div>
+
+              <div class="join-btns">
+                <a class="btn btn-primary" href="#contact">Become a Member</a>
+                <a class="btn btn-outline" href="#events">View Events</a>
+              </div>
+            </div>
+
+            <div class="join-visual">
+              <div class="jv-frame">
+                <img src="images/web_theme.jpeg" alt="AWS SBG LJIET committee applications poster">
+              </div>
+              <span class="jv-caption">Committee recruitment poster, current cohort</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ────────────────────────────────────────────── -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="kicker">Contact</span>
+          <h2>Have questions? Drop us a line.</h2>
+        </div>
+        <div class="contact-layout">
+
+          <aside class="card contact-info">
+            <h3>Visit our Cloud Lab</h3>
+            <p>We welcome students from every branch and year. No prior AWS experience required — just curiosity and
+              consistency.</p>
+            <ul class="contact-list">
+              <li>
+                <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16v16H4z" />
+                    <path d="m22 6-10 7L2 6" />
+                  </svg></div>
+                <div class="ci-text"><strong>Email</strong><a
+                    href="mailto:awsclub@ljiet.edu.in">awsclub@ljiet.edu.in</a></div>
+              </li>
+              <li>
+                <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></div>
+                <div class="ci-text"><strong>Campus</strong><span>LJ University Campus, Block B, Lab 302</span></div>
+              </li>
+              <li>
+                <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg></div>
+                <div class="ci-text"><strong>Office Hours</strong><span>Wednesdays, 4:00 PM – 5:30 PM</span></div>
+              </li>
+            </ul>
+          </aside>
+
+          <div class="card contact-form-wrap">
+            <h3>Send us a message</h3>
+            <form id="contactForm" novalidate>
               <div class="form-row">
                 <div class="field">
                   <label for="name">Name</label>
-                  <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name">
+                  <input id="name" name="name" type="text" placeholder="Your name" required>
                 </div>
                 <div class="field">
                   <label for="email">Email</label>
-                  <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+                  <input id="email" name="email" type="email" placeholder="you@example.com" required>
                 </div>
               </div>
               <div class="field">
@@ -2292,162 +525,69 @@
               </div>
               <div class="field">
                 <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Tell us what you want to build or learn."></textarea>
+                <textarea id="message" name="message" placeholder="Tell us what you want to build or learn."
+                  required></textarea>
               </div>
-              <button class="btn btn-primary" type="submit">Send Message</button>
+              <button class="btn btn-primary" type="submit" style="width:100%;">Send Message</button>
             </form>
           </div>
-        </div>
-      </section>
-    </main>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-inner">
-          <div>
-            <a class="brand" href="#home" aria-label="AWS Student Builder Group home">
-              <span class="brand-mark" aria-hidden="true"
-                style="padding: 4px; display: inline-flex; align-items: center; justify-content: center;">
-                <img src="images/AWS_LJ_LOGO.jpg.jpeg" alt="AWS Logo"
-                  style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px;">
-              </span>
-              <span class="brand-text"><span>AWS Student Builder Group</span><span>LJIET Chapter</span></span>
-            </a>
-            <p>A student developer community at LJ Institute of Engineering & Technology, focused on practical training,
-              cloud certifications, and hands-on software building.</p>
-          </div>
-          <div>
-            <h3>Club</h3>
-            <ul class="footer-links">
-              <li><a href="#about">About</a></li>
-              <li><a href="#domains">Domains</a></li>
-              <li><a href="#team">Team</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Programs</h3>
-            <ul class="footer-links">
-              <li><a href="#events">Events</a></li>
-              <li><a href="#impact">Impact</a></li>
-              <li><a href="#join">Join</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Connect</h3>
-            <ul class="footer-links">
-              <li><a href="#contact">Contact</a></li>
-              <li><a href="#">LinkedIn</a></li>
-              <li><a href="https://github.com/ljawswebsite/AWS_SBG_LJIET" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <span>&copy; 2026 AWS Student Builder Group. All rights reserved.</span>
-          <span>Built for students, faculty, sponsors, and future cloud leaders.</span>
         </div>
       </div>
-    </footer>
-  </div>
+    </section>
+  </main>
 
-  <script>
-    (() => {
-      const navbar = document.getElementById('navbar');
-      const navLinks = document.getElementById('navLinks');
-      const menuToggle = document.getElementById('menuToggle');
-      const sections = [...document.querySelectorAll('main section[id]')];
-      const navAnchors = [...document.querySelectorAll('.nav-links a')];
-      const revealItems = [...document.querySelectorAll('.reveal')];
-      const counters = [...document.querySelectorAll('.counter')];
+  <!-- ═══ FOOTER ══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-logos">
+            <img class="footer-lj-logo" src="images/lj.png" alt="Lok Jagruti Kendra University logo">
+            <div class="footer-divider"></div>
+            <div class="footer-aws-block">
+              <img src="images/AWS_LJIET_LOGO.jpeg" alt="AWS SBG logo">
+            </div>
+          </div>
+          <div class="footer-brand-name" style="margin-bottom: 16px;">
+            AWS Student Builder Group
+            <span>LJIET Chapter</span>
+          </div>
+          <p style="font-size: 0.9rem;">A student developer community at LJ Institute of Engineering &amp; Technology,
+            focused on practical cloud training, certifications, and hands-on software building.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Club</h4>
+          <ul class="footer-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#team">Team</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Programs</h4>
+          <ul class="footer-links">
+            <li><a href="#events">Events</a></li>
+            <li><a href="#join">Join</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul class="footer-links">
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://www.linkedin.com/company/aws-student-builder-group-at-ljiet/posts/"
+                target="_blank">LinkedIn</a></li>
+            <li><a href="#" target="_blank">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 AWS Student Builder Group, LJIET Chapter. All rights reserved.</span>
+        <span>Built for students, faculty, sponsors, and future cloud leaders.</span>
+      </div>
+    </div>
+  </footer>
 
-      const setNavState = () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 16);
-      };
-
-      const closeMenu = () => {
-        document.body.classList.remove('menu-open');
-        navLinks.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      };
-
-      menuToggle.addEventListener('click', () => {
-        const isOpen = navLinks.classList.toggle('open');
-        document.body.classList.toggle('menu-open', isOpen);
-        menuToggle.setAttribute('aria-expanded', String(isOpen));
-      });
-
-      navAnchors.forEach((anchor) => anchor.addEventListener('click', closeMenu));
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') closeMenu();
-      });
-
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
-
-      revealItems.forEach((item, index) => {
-        item.style.transitionDelay = `${Math.min(index % 3, 2) * 35}ms`;
-        revealObserver.observe(item);
-      });
-
-      const animateCounter = (counter) => {
-        const target = Number(counter.dataset.target || 0);
-        const duration = 700;
-        const startedAt = performance.now();
-
-        const tick = (now) => {
-          const progress = Math.min((now - startedAt) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          counter.textContent = `${Math.floor(target * eased)}+`;
-          if (progress < 1) requestAnimationFrame(tick);
-        };
-
-        requestAnimationFrame(tick);
-      };
-
-      const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCounter(entry.target);
-            counterObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.5 });
-
-      counters.forEach((counter) => counterObserver.observe(counter));
-
-      const activeObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-          navAnchors.forEach((anchor) => anchor.classList.toggle('active', anchor === active));
-        });
-      }, { threshold: 0.38, rootMargin: '-22% 0px -50% 0px' });
-
-      sections.forEach((section) => activeObserver.observe(section));
-
-      document.querySelector('.contact-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        const button = event.currentTarget.querySelector('button[type="submit"]');
-        const original = button.textContent;
-        button.textContent = 'Message Queued';
-        button.disabled = true;
-        setTimeout(() => {
-          button.textContent = original;
-          button.disabled = false;
-          event.currentTarget.reset();
-        }, 1600);
-      });
-
-      setNavState();
-      window.addEventListener('scroll', setNavState, { passive: true });
-    })();
-  </script>
+  <script src="script.js"></script>
 </body>
 
 </html>
