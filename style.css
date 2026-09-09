@@ -365,12 +365,14 @@ p {
 }
 
 .brand-lj img {
-  height: 40px;
+  height: 36px;
+  width: 36px;
+  object-fit: contain;
 }
 
 .brand-divider {
   width: 1px;
-  height: 26px;
+  height: 24px;
   background: var(--line-strong);
 }
 
@@ -380,8 +382,8 @@ p {
   justify-content: center;
   background: var(--navy);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   overflow: hidden;
   flex-shrink: 0;
   transition: transform 0.25s ease;
