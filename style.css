@@ -993,6 +993,10 @@ p {
   text-align: center;
 }
 
+.core-card .socials {
+  justify-content: center;
+}
+
 .core-card .avatar {
   width: 90px;
   height: 90px;
