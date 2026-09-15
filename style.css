@@ -1338,15 +1338,20 @@ p {
 }
 
 .footer-brand-logos img.footer-lj-logo {
-  height: 34px;
+  height: 38px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
   background: #FFF;
-  padding: 4px 8px;
-  border-radius: 5px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: inline-block;
 }
 
 .footer-divider {
   width: 1px;
-  height: 26px;
+  height: 28px;
   background: var(--navy-line);
 }
 
@@ -1356,8 +1361,8 @@ p {
   justify-content: center;
   background: #FFF;
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -1686,6 +1691,20 @@ p {
     gap: 8px;
   }
 
+  .footer-brand-logos img.footer-lj-logo {
+    height: 34px;
+    padding: 4px 10px;
+  }
+
+  .footer-divider {
+    height: 24px;
+  }
+
+  .footer-aws-block {
+    width: 34px;
+    height: 34px;
+  }
+
   .hero-actions {
     flex-direction: column;
   }
@@ -1704,6 +1723,7 @@ p {
 
   .brand-lj img {
     height: 32px;
+    width: 32px;
   }
 
   .brand-divider {
@@ -1711,12 +1731,17 @@ p {
   }
 
   .brand-aws-block {
-    height: 30px;
-    padding: 3px 6px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
   }
 
   .brand-aws-block img {
-    height: 18px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
   }
 
   .brand-text-group .b-name {
@@ -1737,7 +1762,8 @@ p {
   }
 
   .brand-lj img {
-    height: 27px;
+    height: 28px;
+    width: 28px;
   }
 
   .brand-divider {
@@ -1745,12 +1771,17 @@ p {
   }
 
   .brand-aws-block {
-    height: 27px;
-    padding: 2px 4px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
   }
 
   .brand-aws-block img {
-    height: 15px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
   }
 
   .brand-text-group .b-name {
@@ -1759,6 +1790,20 @@ p {
 
   .brand-text-group .b-sub {
     font-size: 0.60rem;
+  }
+
+  .footer-brand-logos img.footer-lj-logo {
+    height: 30px;
+    padding: 3px 8px;
+  }
+
+  .footer-divider {
+    height: 20px;
+  }
+
+  .footer-aws-block {
+    width: 30px;
+    height: 30px;
   }
 }
 
