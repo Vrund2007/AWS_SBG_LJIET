@@ -1056,6 +1056,10 @@ p {
   object-position: center 52%;
 }
 
+.gallery-item img.img-goddess {
+  object-position: center 52%;
+}
+
 .gallery-item:hover img {
   transform: scale(1.04);
 }
